@@ -5,11 +5,13 @@ import { createTheme } from "@mui/material";
 import { Game } from "./components/Game";
 import { GameFrame } from "./components/GameFrame";
 import { LifeGameDiscription } from "./components/LifeGameDiscription";
+import { GREEN } from "./color";
+import { Spacer } from "./components/utils/Spacer";
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#52A44E",
+      main: GREEN,
     },
   },
 });
@@ -17,8 +19,9 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <AppWrapper>
+      <AppWrapper displayWidth={window.outerWidth}>
         <LifeGameDiscription />
+        <Spacer height="50px" width="50px" />
         <GameFrame>
           <Game />
         </GameFrame>
@@ -29,9 +32,10 @@ function App() {
 
 export default App;
 
-const AppWrapper = styled.div({
-  padding: "25px",
+const AppWrapper = styled.div((props: { displayWidth: number }) => ({
+  padding: "50px",
   display: "flex",
   justifyContent: "space-between",
-  alignItems: "start",
-});
+  flexDirection: props.displayWidth >= 1350 ? "row" : "column",
+  alignItems: props.displayWidth >= 1350 ? "start" : "center",
+}));

@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import React, { useCallback, useEffect, useState } from "react";
+import { GREEN } from "../color";
 import { CellStatus } from "../types";
 import { Button } from "./Button";
 import { Cell } from "./Cell";
@@ -103,7 +104,6 @@ export const Game = () => {
     };
   }, [intervalId]);
 
-
   return (
     <GameWrapper>
       <Generation>第 {generation} 世代</Generation>
@@ -157,4 +157,5 @@ const ButtonWrapper = styled.div({
 const Generation = styled.span({
   fontWeight: 700,
   letterSpacing: "-.08rem",
+  color: GREEN,
 });
