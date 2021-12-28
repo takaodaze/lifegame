@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { ThemeProvider } from "@emotion/react";
+import styled from "@emotion/styled";
+import { createTheme } from "@mui/material";
+import { Game } from "./components/Game";
+import { GameFrame } from "./components/GameFrame";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#52A44E",
+    },
+  },
+});
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <AppWrapper>
+        <GameFrame>
+          <Game />
+        </GameFrame>
+      </AppWrapper>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+const AppWrapper = styled.div({
+  padding: "25px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
