@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 import { createTheme } from "@mui/material";
 import { Game } from "./components/Game";
 import { GameFrame } from "./components/GameFrame";
+import { LifeGameDiscription } from "./components/LifeGameDiscription";
 
 const theme = createTheme({
   palette: {
@@ -17,6 +18,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <AppWrapper>
+        <LifeGameDiscription />
         <GameFrame>
           <Game />
         </GameFrame>
@@ -30,6 +32,6 @@ export default App;
 const AppWrapper = styled.div({
   padding: "25px",
   display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
+  justifyContent: "space-between",
+  alignItems: "start",
 });

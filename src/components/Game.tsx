@@ -3,8 +3,9 @@ import React, { useCallback, useEffect, useState } from "react";
 import { CellStatus } from "../types";
 import { Button } from "./Button";
 import { Cell } from "./Cell";
+import { Spacer } from "./utils/Spacer";
 
-const FIELD_SIZE = 60;
+const FIELD_SIZE = 55;
 
 export const Game = () => {
   const [generation, setGeneration] = useState(1);
@@ -67,13 +68,16 @@ export const Game = () => {
 
   const setPreset = useCallback(() => {
     killAll();
-    const basePoint = sizeX / 2 + (sizeY / 2) * sizeX;
-    changeStatus(basePoint - sizeX, "live");
-    changeStatus(basePoint - 1, "live");
-    changeStatus(basePoint + sizeX - 1, "live");
-    changeStatus(basePoint + sizeX, "live");
-    changeStatus(basePoint + sizeX + 1, "live");
-  }, [changeStatus, killAll, sizeX, sizeY]);
+    const points = [
+      1399, 1400, 1402, 1403, 1404, 1405, 1406, 1407, 1454, 1455, 1457, 1458,
+      1459, 1460, 1461, 1462, 1509, 1510, 1564, 1565, 1571, 1572, 1619, 1620,
+      1626, 1627, 1674, 1675, 1681, 1682, 1736, 1737, 1784, 1785, 1786, 1787,
+      1788, 1789, 1791, 1792, 1839, 1840, 1841, 1842, 1843, 1844, 1846, 1847,
+    ];
+    setStatusTable((table) =>
+      table.map((_, i) => (points.includes(i) ? "live" : "dead"))
+    );
+  }, [killAll]);
 
   const play = () => {
     if (intervalId === 0) {
@@ -88,14 +92,22 @@ export const Game = () => {
     setIntervalId(0);
   };
 
+  const reset = () => {
+    killAll();
+    setGeneration(1);
+  };
+
   useEffect(() => {
     return () => {
       window.clearInterval(intervalId);
     };
   }, [intervalId]);
 
+
   return (
     <GameWrapper>
+      <Generation>第 {generation} 世代</Generation>
+      <Spacer height="5px" />
       <CellWrapper x={sizeX} y={sizeX}>
         {[...Array(sizeY * sizeX)].map((_, i) => {
           return (
@@ -109,12 +121,11 @@ export const Game = () => {
         })}
       </CellWrapper>
 
-      <Generation>第 {generation} 世代</Generation>
-
+      <Spacer height="15px" />
       <ButtonWrapper>
         <Button onClick={play}>Start</Button>
         <Button onClick={pause}>pause</Button>
-        <Button onClick={killAll}>reset</Button>
+        <Button onClick={reset}>reset</Button>
         <Button onClick={() => nextGeneration()}>next generation</Button>
         <Button onClick={() => setPreset()}>preset</Button>
       </ButtonWrapper>
@@ -125,7 +136,7 @@ export const Game = () => {
 const GameWrapper = styled.div({
   display: "flex",
   flexDirection: "column",
-  alignItems: "center",
+  alignItems: "start",
 });
 
 const CellWrapper = styled.div((props: { x: number; y: number }) => ({
@@ -136,10 +147,14 @@ const CellWrapper = styled.div((props: { x: number; y: number }) => ({
 }));
 
 const ButtonWrapper = styled.div({
+  width: "100%",
   display: "flex",
   gap: "20px",
   alignItems: "center",
   justifyContent: "center",
 });
 
-const Generation = styled.p({});
+const Generation = styled.span({
+  fontWeight: 700,
+  letterSpacing: "-.08rem",
+});
