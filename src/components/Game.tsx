@@ -54,6 +54,10 @@ export const Game = () => {
           return "live";
         } else if (s === "live" && (detectedLive === 2 || detectedLive === 3)) {
           return "live";
+        } else if (s === "live" && detectedLive <= 1) {
+          return "dead";
+        } else if (s === "live" && detectedLive >= 4) {
+          return "dead";
         } else {
           return "dead";
         }
