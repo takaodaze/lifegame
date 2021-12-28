@@ -152,6 +152,7 @@ const ButtonWrapper = styled.div({
   gap: "20px",
   alignItems: "center",
   justifyContent: "center",
+  flexWrap: "wrap",
 });
 
 const Generation = styled.span({

@@ -25,12 +25,14 @@ export const LifeGameDiscription = () => {
         }
       </Content>
       <Spacer height="30px" />
-      <RuleDiaglamCard>
+      {/* {window.outerWidth >= 1350 && ( */}
+      <RuleDiaglamCard displayWidth={window.outerWidth}>
         <RuleDiagramSection type="born" />
         <RuleDiagramSection type="alive" />
         <RuleDiagramSection type="depopulation" />
         <RuleDiagramSection type="overcrowding" />
       </RuleDiaglamCard>
+      {/* )} */}
     </Wrapper>
   );
 };
@@ -55,7 +57,6 @@ const SubTitle = styled.div({
 const Content = styled.div({
   fontSize: "14px",
   lineHeight: "170%",
-  maxWidth: "800px",
   whiteSpace: "pre-wrap",
 });
 
@@ -64,12 +65,12 @@ const Annotation = styled.div({
   fontSize: "12px",
 });
 
-const RuleDiaglamCard = styled.div({
+const RuleDiaglamCard = styled.div((props: { displayWidth: number }) => ({
   padding: "50px",
   background: "#26282d",
   borderRadius: "15px",
   display: "grid",
   gap: "50px",
-  gridTemplateColumns: "1fr 1fr",
-  gridTemplateRows: "1fr 1fr",
-});
+  gridTemplateRows: `repeat(${props.displayWidth >= 1350 ? 2 : 1}, 1fr)`,
+  gridTemplateColumns: `repeat(${props.displayWidth >= 1350 ? 2 : 1}, 1fr)`,
+}));

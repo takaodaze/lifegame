@@ -38,4 +38,5 @@ const AppWrapper = styled.div((props: { displayWidth: number }) => ({
   justifyContent: "space-between",
   flexDirection: props.displayWidth >= 1350 ? "row" : "column",
   alignItems: props.displayWidth >= 1350 ? "start" : "center",
+  overflow: "auto",
 }));
