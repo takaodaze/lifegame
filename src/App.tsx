@@ -13,6 +13,7 @@ const theme = createTheme({
     primary: {
       main: GREEN,
     },
+    mode: "dark",
   },
 });
 
