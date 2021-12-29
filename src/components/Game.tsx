@@ -20,16 +20,36 @@ export const Game = () => {
 
   const detectAround = useCallback(
     (point: number, table: CellStatus[]) => {
-      const aroundLife = [
-        table[point - sizeX - 1],
-        table[point - sizeX],
-        table[point - sizeX + 1],
-        table[point - 1],
-        table[point + 1],
-        table[point + sizeX - 1],
-        table[point + sizeX],
-        table[point + sizeX + 1],
-      ];
+      let aroundLife: CellStatus[] = [];
+      if (point % sizeX === 0) {
+        aroundLife = [
+          table[point - sizeX],
+          table[point - sizeX + 1],
+          table[point + 1],
+          table[point + sizeX],
+          table[point + sizeX + 1],
+        ];
+      } else if (point % sizeX === sizeX - 1) {
+        aroundLife = [
+          table[point - sizeX - 1],
+          table[point - sizeX],
+          table[point - 1],
+          table[point + sizeX - 1],
+          table[point + sizeX],
+        ];
+      } else {
+        aroundLife = [
+          table[point - sizeX - 1],
+          table[point - sizeX],
+          table[point - sizeX + 1],
+          table[point - 1],
+          table[point + 1],
+          table[point + sizeX - 1],
+          table[point + sizeX],
+          table[point + sizeX + 1],
+        ];
+      }
+
       const detectLive = aroundLife.reduce(
         (prev, curr) => prev + (curr === "live" ? 1 : 0),
         0
@@ -98,6 +118,8 @@ export const Game = () => {
     setGeneration(1);
   };
 
+  const isPlaying = () => (intervalId === 0 ? false : true);
+
   useEffect(() => {
     return () => {
       window.clearInterval(intervalId);
@@ -123,11 +145,12 @@ export const Game = () => {
 
       <Spacer height="15px" />
       <ButtonWrapper>
-        <Button onClick={play}>Start</Button>
-        <Button onClick={pause}>pause</Button>
-        <Button onClick={reset}>reset</Button>
-        <Button onClick={() => nextGeneration()}>next generation</Button>
-        <Button onClick={() => setPreset()}>preset</Button>
+        <Button onClick={() => (isPlaying() ? pause() : play())}>
+          {isPlaying() ? "ストップ" : "プレイ"}
+        </Button>
+        <Button onClick={reset}>クリア</Button>
+        <Button onClick={() => nextGeneration()}>ステップ</Button>
+        <Button onClick={() => setPreset()}>プリセット</Button>
       </ButtonWrapper>
     </GameWrapper>
   );
