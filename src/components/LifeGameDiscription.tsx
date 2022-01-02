@@ -41,7 +41,6 @@ const Wrapper = styled.div({
   display: "flex",
   flexDirection: "column",
   justifyContent: "start",
-  overflow: "scroll",
 });
 const Title = styled.div({
   fontWeight: 700,
